@@ -1,10 +1,21 @@
 FC.level1 = {
   create: function() {
     this.spacePressed = false;
+    game.physics.startSystem(Phaser.Physics.ARCADE);
     this.cursor = game.input.keyboard.createCursorKeys();
     this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    this.background = game.add.tileSprite(0, 0, 510, 510, "tile");
-    this.hero = game.add.sprite(250, 170, 'hero');
+    this.background = game.add.tileSprite(0, 0, 512, 1536, "tile");
+
+    this.map = game.add.tilemap('forest');
+    this.map.addTilesetImage('tileset');
+    this.map.setCollisionBetween(1,9);
+
+    this.forest = this.map.createLayer('Tile Layer 1');
+    this.forest.resizeWorld();
+
+    this.hero = game.add.sprite(260, game.world.height-100, 'hero');
+    game.physics.arcade.enable(this.hero);
+    this.hero.body.collideWorldBounds = true;
     this.hero.animations.add('left', [30,31,32,33,34], 6, true);
     this.hero.animations.add('right', [10,11,12,13,14], 6, true);
     this.hero.animations.add('up', [0,1,2,3,4], 6, true);
@@ -23,18 +34,21 @@ FC.level1 = {
     this.hero.animations.add('ArightDown', [50,51,52,53,54], 6, false);
     this.hero.frame = 20;
     this.hero.facing = 5;
-    game.physics.arcade.enable(this.hero);
+
+    game.camera.follow(this.hero);
+
   },
   update: function() {
     this.moveHero();
     this.heroAttack();
+    game.physics.arcade.collide(this.hero, this.forest);
   },
   moveHero: function() {
     if (this.cursor.left.isDown &&
         !this.cursor.right.isDown &&
         !this.cursor.up.isDown &&
         !this.cursor.down.isDown) {
-      this.hero.body.velocity.x = -50;
+      this.hero.body.velocity.x = -60;
       this.hero.body.velocity.y = 0;
       this.hero.facing = 7;
       this.hero.animations.play('left');
@@ -43,7 +57,7 @@ FC.level1 = {
          this.cursor.right.isDown &&
         !this.cursor.up.isDown &&
         !this.cursor.down.isDown) {
-      this.hero.body.velocity.x = 50;
+      this.hero.body.velocity.x = 60;
       this.hero.body.velocity.y = 0;
       this.hero.facing = 3;
       this.hero.animations.play('right');
@@ -52,7 +66,7 @@ FC.level1 = {
         !this.cursor.right.isDown &&
          this.cursor.up.isDown &&
         !this.cursor.down.isDown) {
-      this.hero.body.velocity.y = -50;
+      this.hero.body.velocity.y = -60;
       this.hero.body.velocity.x = 0;
       this.hero.facing = 1;
       this.hero.animations.play('up');
@@ -61,7 +75,7 @@ FC.level1 = {
         !this.cursor.right.isDown &&
         !this.cursor.up.isDown &&
         this.cursor.down.isDown) {
-      this.hero.body.velocity.y = 50;
+      this.hero.body.velocity.y = 60;
       this.hero.body.velocity.x = 0;
       this.hero.facing = 5;
       this.hero.animations.play('down');
@@ -70,8 +84,8 @@ FC.level1 = {
         !this.cursor.right.isDown &&
         this.cursor.up.isDown &&
         !this.cursor.down.isDown) {
-      this.hero.body.velocity.y = -50;
-      this.hero.body.velocity.x = -50;
+      this.hero.body.velocity.y = -60;
+      this.hero.body.velocity.x = -60;
       this.hero.facing = 8;
       this.hero.animations.play('leftUp');
     }
@@ -79,8 +93,8 @@ FC.level1 = {
         !this.cursor.right.isDown &&
         !this.cursor.up.isDown &&
         this.cursor.down.isDown) {
-      this.hero.body.velocity.y = 50;
-      this.hero.body.velocity.x = -50;
+      this.hero.body.velocity.y = 60;
+      this.hero.body.velocity.x = -60;
       this.hero.facing = 6;
       this.hero.animations.play('leftDown');
     }
@@ -88,8 +102,8 @@ FC.level1 = {
         this.cursor.right.isDown &&
         this.cursor.up.isDown &&
         !this.cursor.down.isDown) {
-      this.hero.body.velocity.y = -50;
-      this.hero.body.velocity.x = 50;
+      this.hero.body.velocity.y = -60;
+      this.hero.body.velocity.x = 60;
       this.hero.facing = 2;
       this.hero.animations.play('rightUp');
     }
@@ -97,8 +111,8 @@ FC.level1 = {
         this.cursor.right.isDown &&
         !this.cursor.up.isDown &&
         this.cursor.down.isDown) {
-      this.hero.body.velocity.y = 50;
-      this.hero.body.velocity.x = 50;
+      this.hero.body.velocity.y = 60;
+      this.hero.body.velocity.x = 60;
       this.hero.facing = 4;
       this.hero.animations.play('rightDown');
     }
