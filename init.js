@@ -6,12 +6,15 @@ FC.init = {
     game.load.image('tile', 'GFX/tile.png');
     game.load.image('tileset', 'GFX/tileset.png');
     game.load.tilemap('forest', 'forest.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('swamp', 'swamp.json', null, Phaser.Tilemap.TILED_JSON);
   },
   create: function() {
     game.scale.pageAlignHorizontally = true;
     game.scale.pageAlignVertically = true;
     game.scale.refresh();
     game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.state.start('level1');
+    game.levels = ['forest','swamp'];
+    game.currLevel = 0;
+    game.state.start('level');
   }
 }
