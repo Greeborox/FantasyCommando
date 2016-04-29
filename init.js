@@ -3,8 +3,12 @@ var FC = {};
 FC.init = {
   preload: function() {
     game.load.spritesheet('hero', 'GFX/hero.png', 32, 32);
+    game.load.spritesheet('charger', 'GFX/charger.png', 32, 32);
     game.load.image('tile', 'GFX/tile.png');
     game.load.image('tileset', 'GFX/tileset.png');
+    game.load.image('swampL', 'GFX/swampL.png');
+    game.load.image('swampR', 'GFX/swampR.png');
+    game.load.image('missile','GFX/magicMissile.png');
     game.load.tilemap('forest', 'forest.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.tilemap('swamp', 'swamp.json', null, Phaser.Tilemap.TILED_JSON);
   },
