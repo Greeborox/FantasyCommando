@@ -28,7 +28,7 @@ FC.init = {
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.levels = ['forest','swamp','fortress','Demon Lord Lair'];
     game.heroLives = 5;
-    game.currLevel = 3;
+    game.currLevel = 0;
     game.state.start('level');
   }
 }
